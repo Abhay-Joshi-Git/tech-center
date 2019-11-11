@@ -70,8 +70,12 @@ export default class Post extends React.Component {
   }
   renderTags(post) {
     if (post.tags.length) {
-      return post.tags.map(tag => {
-        return <span className="tag badge badge-secondary">{tag}</span>;
+      return post.tags.map((tag, i) => {
+        return (
+          <span key={i} className="tag badge badge-secondary">
+            {tag}
+          </span>
+        );
       });
     }
     return null;
