@@ -21,7 +21,7 @@ export default class QuestionThread extends React.Component {
     const { thread } = this.state;
 
     return (
-      <div className="thread p-2 mt-3">
+      <div className="thread container mt-3">
         <div className="thread-tite text-left font-weight-bold">{thread.title}</div>
         <hr></hr>
         <div className="post-question">
@@ -34,7 +34,6 @@ export default class QuestionThread extends React.Component {
           <Post></Post>
           <Post></Post>
         </div>
-        <hr></hr>
       </div>
     );
   }
