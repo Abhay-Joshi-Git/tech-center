@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-import axios from 'axios';
+// import axios from 'axios';
 
 import Post from '../../components/user-post/Post';
 import './QuestionThread.scss';
@@ -61,7 +61,7 @@ export default class QuestionThread extends React.Component {
                 }
               }
             ],
-            type: this.props.type || 'answer',
+            type: 'answer',
             tags: ['Javascript', 'React', 'Redux']
           }
         ],
@@ -117,11 +117,12 @@ export default class QuestionThread extends React.Component {
         }
       ]
     };
-    axios({
-      method: 'post',
-      url: 'https://evening-temple-27295.herokuapp.com/threads',
-      data: {}
-    });
+    // TODO - API integration for new thread
+    // axios({
+    //   method: 'post',
+    //   url: 'https://evening-temple-27295.herokuapp.com/threads',
+    //   data: {}
+    // });
   };
   setEditableRef = ref => {
     this.editableRef = ref;
@@ -203,7 +204,7 @@ export default class QuestionThread extends React.Component {
           ></Post>
           <button
             type="button"
-            class="btn btn-primary new-question-button"
+            className="btn btn-primary new-question-button"
             onClick={this.askNewQuestion}
           >
             Post new question
