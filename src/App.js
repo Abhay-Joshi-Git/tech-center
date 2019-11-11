@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import './App.scss';
 import QuestionsPage from './pages/questions/QuestionsPage';
 import NotFound from './components/Notfound';
-import QuestionThread from './pages/QuestionThread';
+import QuestionThread from './pages/question-thread/QuestionThread';
 import PreferencesPage from './pages/preferences/PreferencesPage';
 
 function App() {

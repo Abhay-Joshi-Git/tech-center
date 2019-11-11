@@ -73,9 +73,11 @@ export default class Comment extends React.Component {
         className="col-12 text-left comment-box"
       >
         <div className="d-inline-block">{`${comment.description} - `} </div>
-        <button type="button p-0 comment-user" className="btn-link">
-          {comment.user.name}
-        </button>
+        {comment.user && (
+          <button type="button p-0 comment-user" className="btn-link">
+            {comment.user.name}
+          </button>
+        )}
         <div className="d-inline-block comment-timestamp">{'Posted 1 hours ago'}</div>
         <div className="comment-action-icons" ref="comment_action">
           <div
@@ -97,10 +99,11 @@ export default class Comment extends React.Component {
     const { match } = this.props;
     const { comment, updatedComment, isEditable } = this.state;
 
+    // TODO - Add new Comment functionality pending
     return (
       <div className="user-comment col-12">
-        {isEditable && this.renderIput()}
-        {!isEditable && this.renderComment(comment)}
+        {(isEditable || comment.isEditable) && this.renderIput()}
+        {!isEditable && !comment.isEditable && this.renderComment(comment)}
       </div>
     );
   }
