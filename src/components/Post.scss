@@ -1,5 +1,6 @@
 .post {
   margin: 10px 0;
+
   .post-status {
     font-size: calc(36px + 0.4vmin);
     padding: 0.3rem;
@@ -21,6 +22,7 @@
   }
 
   .post-description {
+    font-size: calc(10px + 1vmin);
     margin-bottom: 1rem;
   }
 
@@ -52,4 +54,7 @@
       color: #8a8a8a;
     }
   }
+}
+.post:not(:first-child) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 }
