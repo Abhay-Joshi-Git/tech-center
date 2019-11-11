@@ -1,12 +1,15 @@
-$colorPlaceholderText : #ffffff;
+@import '../../common.scss';
 
 .preferences-container {
-    background-color: #022A35;
+    background-color: $colorBackground;
     min-height: 100%;
 }
+@import '../../common.scss';
+
 .header-setup {	
     height: 86px;
     background-color: #003341;
+    color: $colorPlaceholderText;
 }
 
 .logo-text {
@@ -15,12 +18,12 @@ $colorPlaceholderText : #ffffff;
 }
 .preferences-container {
     footer {
-        border-top: 1px solid #163A45;
+        border-top: 1px solid $colorPlaceholderText;
         height: 107px;
     }
 }
 .label-color  {
-    color: #ffffff;
+    color: $colorPlaceholderText;
 }
 
 .btn-text-type {

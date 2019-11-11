@@ -197,10 +197,9 @@ class PreferencesPage extends Component {
     return (
       <div className="container-fluid mx-0 p-0 preferences-container">
         <header className="row mx-0 header-setup align-items-center">
-          <div className="col-md-2 offset-md-3 p-0">
+          <div className="col text-center p-0">
               <span className="logo-text"> Setup Profile </span>
           </div>
-          <div className="col-md-2" />
         </header>
         <div className="pb-3">
           <div className="row mx-0 mt-5">

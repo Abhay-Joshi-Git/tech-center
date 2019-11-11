@@ -1,7 +1,7 @@
-$colorPlaceholderText: #ffffff;
+@import '../../common.scss';
 
 .question-page-container {
-  background-color: #022a35;
+  background-color: $colorBackground;
   min-height: 100%;
 }
 .header-setup {
@@ -20,7 +20,7 @@ $colorPlaceholderText: #ffffff;
   }
 }
 .label-color {
-  color: #ffffff;
+  color: $colorPlaceholderText;
 }
 
 .btn-text-type {
