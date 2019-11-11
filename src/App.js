@@ -12,7 +12,6 @@ function App() {
     <div className="h-100">
       {/* // HEADER WILL GO HERE */}
       <Switch>
-        <Route exact path="/" component={Welcome} />
         <Route exact path="/question-thread/:questionId" component={QuestionThread} />
         <Route exact path="/threads" component={QuestionsPage} />
         <Route exact path="/" component={QuestionsPage} />

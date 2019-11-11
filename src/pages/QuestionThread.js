@@ -10,7 +10,7 @@ export default class QuestionThread extends React.Component {
     const questionThreadId = match.params.questionId;
 
     return (
-      <div>
+      <div className="container">
         Question Thread {questionThreadId}
         <hr></hr>
         <Post></Post>

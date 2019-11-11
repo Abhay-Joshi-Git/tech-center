@@ -13,13 +13,10 @@ class PreferencesPage extends Component {
       email: "",
       selectedTopicOfInterest: [],
       topicsOfInterest: [],
-      keyword: "", // this represents user entered value for topic of interest
       isUpdating: false,
       firstNameError: false,
       lastNameError: false,
       emailError: false,
-      keywordError: false,
-      keywordErrorNote: "",
       isUpdatedSuccess: false
     };
   }
@@ -71,23 +68,23 @@ class PreferencesPage extends Component {
   // }
 
   saveClicked = () => {
-    const {
-      firstName,
-      lastName,
-      email,
-      selectedTopicOfInterest
-    } = this.state;
-    const userProfileObj = {
-      user: {
-        id: this.props.auth.data.id,
-        first_name: firstName,
-        last_name: lastName,
-        email
-      },
-      preference: {
-        topic_list: selectedTopicOfInterest
-      }
-    };
+    // const {
+    //   firstName,
+    //   lastName,
+    //   email,
+    //   selectedTopicOfInterest
+    // } = this.state;
+    // const userProfileObj = {
+    //   user: {
+    //     id: this.props.auth.data.id,
+    //     first_name: firstName,
+    //     last_name: lastName,
+    //     email
+    //   },
+    //   preference: {
+    //     topic_list: selectedTopicOfInterest
+    //   }
+    // };
 
     // const userId = this.props.auth.data.id;
     // this.setState({
@@ -179,7 +176,6 @@ class PreferencesPage extends Component {
   };
   render() {
     const {
-      keyword,
       firstName,
       lastName,
       email,
