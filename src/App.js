@@ -5,6 +5,7 @@ import './App.scss';
 import Login from './components/Login';
 import Welcome from './pages/Welcome';
 import NotFound from './components/Notfound';
+import QuestionThread from './pages/QuestionThread';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       {/* // HEADER WILL GO HERE */}
       <Switch>
         <Route exact path="/" component={Welcome} />
+        <Route exact path="/question-thread/:questionId" component={QuestionThread} />
         <Route component={NotFound} />
       </Switch>
     </div>
