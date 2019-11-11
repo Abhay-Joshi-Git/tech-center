@@ -43,7 +43,7 @@
 
   .user-comment {
     font-size: calc(10px + 1vmin);
-    button {
+    & > button {
       background: #ddd;
       border: 0;
       padding: 0 0.5rem;

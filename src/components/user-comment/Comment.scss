@@ -1,0 +1,28 @@
+.user-comment {
+  .comment-box {
+    font-size: calc(10px + 1vmin);
+    button {
+      background: #ddd;
+      border: 0;
+      padding: 0 0.5rem;
+      margin: 0 0.4rem;
+    }
+    .comment-timestamp {
+      margin: 0 0.4rem;
+      color: #8a8a8a;
+    }
+  }
+  .comment-editable {
+    .form-group {
+      background: transparent;
+      margin-bottom: 0;
+    }
+    .form-control {
+      background: transparent !important;
+      border: 1px solid #ced4da;
+    }
+    .comment-actions {
+      float: right;
+    }
+  }
+}

@@ -2,12 +2,21 @@ import React from 'react';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCheck } from '@fortawesome/free-solid-svg-icons';
+import RichTextEditor from './text-editor/RichTextEditor';
+
+import { hashCode } from '../utils';
 
 import './Post.scss';
+import UserComment from './user-comment/Comment';
+
+const data1 = `{"blocks":[{"key":"5ahok","text":"this is demo","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"30l8d","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"8ch67","text":"import React from 'react';","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"455hj","text":"export default class App extends React.component {","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"90q02","text":"  render() {","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"c6058","text":"    return <div> Test </div>","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"9kgvh","text":"  }","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"5ive4","text":"}","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"23vge","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"a5od7","text":"please let me know.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}`;
+
 export default class Post extends React.Component {
   constructor(props) {
     super(props);
+    this.editorRef = React.createRef();
     this.state = {
+      questionData: '',
       post: {
         is: 3131313,
         user: {
@@ -62,30 +71,21 @@ export default class Post extends React.Component {
   renderTags(post) {
     if (post.tags.length) {
       return post.tags.map(tag => {
-        return <span class="tag badge badge-secondary">{tag}</span>;
+        return <span className="tag badge badge-secondary">{tag}</span>;
       });
     }
     return null;
   }
   renderPostComments(post) {
     if (post.comments.length) {
-      return post.comments.map(comment => {
-        return (
-          <div className="col-12 text-left user-comment">
-            <div className="d-inline-block">{`${comment.description} - `} </div>
-            <button type="button p-0 comment-user" className="btn-link">
-              {comment.user.name}
-            </button>
-            <div className="d-inline-block comment-timestamp">{'Posted 1 hours ago'}</div>
-            <hr></hr>
-          </div>
-        );
+      return post.comments.map((comment, i) => {
+        return <UserComment key={i} comment={comment}></UserComment>;
       });
     }
     return null;
   }
   render() {
-    const { post } = this.state;
+    const { post, questionData } = this.state;
     const postStatus = classNames({
       'post-status': true,
       accepted: post.accepted
@@ -99,7 +99,15 @@ export default class Post extends React.Component {
           <div className="post-details flex-grow-1">
             <div className="row">
               <div className="col-sm post-description text-left">
-                <p>{post.description}</p>
+                {/* <p>{post.description}</p> */}
+                <div className="RichEditor-root">
+                  <RichTextEditor
+                    readOnly={false}
+                    defaultValue={questionData}
+                    key={hashCode(questionData)}
+                    ref={this.editorRef}
+                  />
+                </div>
               </div>
             </div>
             <div className="row">

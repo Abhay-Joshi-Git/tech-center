@@ -16,6 +16,8 @@ export default class QuestionThread extends React.Component {
     };
   }
   render() {
+    console.log(this.props);
+
     const { match } = this.props;
     const questionThreadId = match.params.questionId;
     const { thread } = this.state;
