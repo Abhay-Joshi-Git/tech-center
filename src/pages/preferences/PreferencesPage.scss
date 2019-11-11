@@ -1,0 +1,30 @@
+$colorPlaceholderText : #ffffff;
+
+.preferences-container {
+    background-color: #022A35;
+    min-height: 100%;
+}
+.header-setup {	
+    height: 86px;
+    background-color: #003341;
+}
+
+.logo-text {
+    font-size: 24px;
+    color: #ffffff;
+}
+.preferences-container {
+    footer {
+        border-top: 1px solid #163A45;
+        height: 107px;
+    }
+}
+.label-color  {
+    color: #ffffff;
+}
+
+.btn-text-type {
+    font-size: 12px;
+    color: $colorPlaceholderText;
+
+}

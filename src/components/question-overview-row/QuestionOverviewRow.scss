@@ -1,0 +1,43 @@
+@import "../../common.scss";
+
+.question-overview-row {
+  background-color: #02252f;
+  border-left: 4px solid transparent;
+  min-height: 65px;
+  .btn-orange-rounded {
+    display: none;
+  }
+  .last-column-content {
+    display: inline-block;
+  }
+}
+
+.posted-by {
+  font-size: 12px; 
+}
+
+.question-overview-row:hover {
+  background-color: #003341;
+  border-left: 4px solid $colorOrange;
+  .btn-orange-rounded {
+    display: inline-block;
+    cursor: pointer;
+  }
+  .last-column-content {
+    display: none;
+  }
+}
+
+.question-variation {
+  color: #87aab4;
+  padding-left: 10px;
+}
+.first-column {
+  width: 10%;
+  display: inline-block;
+}
+.other-columns {
+  width: 90%;
+  display: inline-block;
+}
+
