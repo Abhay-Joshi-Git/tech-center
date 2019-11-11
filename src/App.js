@@ -1,14 +1,12 @@
 import React from 'react';
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 
-import logo from './logo.svg';
 import './App.scss';
-import store from './redux/reducers';
-import { connect } from 'react-redux';
 import Login from './Components/Login';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App container-fluid">
       <header className="App-header">
         <Login></Login>
       </header>
