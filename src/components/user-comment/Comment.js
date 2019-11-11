@@ -36,7 +36,8 @@ export default class Comment extends React.Component {
     return (
       <div className="comment-editable col-12">
         <div className="form-group">
-          <input
+          <textarea
+            rows={3}
             type="text"
             value={updatedComment}
             className="form-control"

@@ -94,6 +94,7 @@ export default class Post extends React.Component {
       'post-status': true,
       accepted: post.accepted
     });
+    const formattedDate = formatDistance(post.askedOn, new Date());
     return (
       <div className="post">
         <div className="d-flex">
@@ -128,7 +129,7 @@ export default class Post extends React.Component {
               </div>
               <div className="col-sm d-flex justify-content-end text-right">
                 <div className="user-info text-left">
-                  <div className="timestamp">{'asked 2 hours ago'}</div>
+                  <div className="timestamp">{`asked ${formattedDate} ago`}</div>
                   <div className="profile-info">
                     <div className="d-inline-block profile-pic">
                       <FontAwesomeIcon icon={faUser} />
