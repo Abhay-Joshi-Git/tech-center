@@ -1,7 +1,7 @@
 @import '../../common';
 
 .dropdown-menu {
-    background-color: white;
+    background-color: $colorBackground;
     border: 1px solid $colorGrayBorder;
     border-top: none;
 }
@@ -51,10 +51,12 @@
 }
 .dropdown-header-row {
     font-size: 14px;
-    background-color: #02252F;
+    background-color: #EBEBEB;
+    color: $colorPlaceholderText;
 }
 .dropdown-content {
     background-color: $colorBackground;
+    color: $colorPlaceholderText;
     max-height: 260px;
     overflow-y: auto;
 }
