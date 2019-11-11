@@ -1,8 +1,9 @@
 @import "../../common.scss";
 
 .question-overview-row {
-  background-color: #02252f;
+  background-color: $colorBackground;
   border-left: 4px solid transparent;
+  border-bottom: 1px solid $colorEFEFEF;
   min-height: 65px;
   .btn-orange-rounded {
     display: none;
@@ -17,7 +18,7 @@
 }
 
 .question-overview-row:hover {
-  background-color: #003341;
+  background-color: #ffd0a633;
   border-left: 4px solid $colorOrange;
   .btn-orange-rounded {
     display: inline-block;

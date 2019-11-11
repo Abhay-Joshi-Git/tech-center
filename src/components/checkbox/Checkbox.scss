@@ -1,6 +1,6 @@
 $colorOrange : #D96A3B;
 $colorGray: #3E5C65;
-$colorWhite: #ffffff;
+$colorPlaceholderText: #02252F;
 
   .checkbox {
     display: inline-block;
@@ -21,7 +21,7 @@ $colorWhite: #ffffff;
   .checkbox label {
     position: relative;
     cursor: pointer;
-    color: $colorWhite;
+    color: $colorPlaceholderText;
     margin-bottom: 0px;
     font-size: 12px;
   }
@@ -53,7 +53,7 @@ $colorWhite: #ffffff;
     left: 7px;
     width: 6px;
     height: 14px;
-    border: 2px solid $colorWhite;
+    border: 2px solid $colorPlaceholderText;
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
   }
