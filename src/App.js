@@ -2,9 +2,9 @@ import React from 'react';
 import { Route, Link, Switch } from 'react-router-dom';
 
 import './App.scss';
-import Login from './Components/Login';
+import Login from './components/Login';
 import Welcome from './pages/Welcome';
-import NotFound from './Components/Notfound';
+import NotFound from './components/Notfound';
 
 function App() {
   return (
