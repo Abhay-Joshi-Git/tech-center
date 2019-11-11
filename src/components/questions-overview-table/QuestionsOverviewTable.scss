@@ -1,0 +1,24 @@
+@import "../../common.scss";
+
+.questions-overview-table-wrapper {
+  color: $colorPlaceholderText;
+}
+.quetions-section {
+  color: $colorPlaceholderText;
+}
+.questions-overview-table-header-row {
+  height: 74px;
+  border-radius: 4px 4px 0 0;
+  background-color: #012e3b;
+  box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.18);
+}
+
+.first-column {
+  width: 10%;
+}
+.other-columns {
+  width: 70%;
+}
+.last-column {
+  width: 20%;
+}

@@ -1,0 +1,52 @@
+{
+    "topicsOfInterest" : [
+        {
+          "label": "Angular",
+          "selected": false
+        },
+        {
+          "label": "Java",
+          "selected": false
+        },
+        {
+          "label": "Javascript",
+          "selected": false
+        },
+        {
+          "label": "React",
+          "selected": false
+        },
+        {
+          "label": "React-native",
+          "selected": false
+        },
+        {
+          "label": "CSS",
+          "selected": false
+        },
+        {
+          "label": "HTML",
+          "selected": false
+        },
+        {
+          "label": "Typescript",
+          "selected": false
+        },
+        {
+          "label": "Setup",
+          "selected": false
+        },
+        {
+          "label": "Webpack",
+          "selected": false
+        },
+        {
+          "label": "ES6",
+          "selected": false
+        },
+        {
+          "label": "Web",
+          "selected": false
+        }
+    ]
+}
