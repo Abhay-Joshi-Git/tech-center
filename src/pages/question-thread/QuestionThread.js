@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-import Post from '../components/Post';
+import Post from '../../components/user-post/Post';
 import './QuestionThread.scss';
 
 export default class QuestionThread extends React.Component {
