@@ -1,27 +1,23 @@
 import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 
-import logo from './logo.svg';
 import './App.scss';
-import store from './redux/store';
-import { connect } from 'react-redux';
+import QuestionsPage from './pages/questions/QuestionsPage';
+import NotFound from './components/Notfound';
+import QuestionThread from './pages/QuestionThread';
+import PreferencesPage from './pages/preferences/PreferencesPage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="h-100">
+      {/* // HEADER WILL GO HERE */}
+      <Switch>
+        <Route exact path="/threads/:questionId" component={QuestionThread} />
+        <Route exact path="/threads" component={QuestionsPage} />
+        <Route exact path="/" component={QuestionsPage} />
+        <Route exact path="/preferences" component={PreferencesPage} />
+        <Route component={NotFound} />
+      </Switch>
     </div>
   );
 }

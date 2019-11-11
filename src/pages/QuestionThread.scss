@@ -1,0 +1,39 @@
+.thread {
+  .thread-title-container {
+    .thread-action-icons {
+      display: none;
+    }
+    .thread-action-icon {
+      cursor: pointer;
+      margin: 0px 0.5rem;
+    }
+  }
+  .thread-title {
+    font-size: calc(14px + 1vmin);
+  }
+  .answer-count {
+    font-size: calc(12px + 1vmin);
+  }
+  .bold-hr {
+    border-top-color: rgba(0, 0, 0, 0.4);
+  }
+  .thread-editable {
+    .form-group {
+      background: transparent;
+      margin-bottom: 0;
+      max-height: 50px;
+    }
+    .form-control {
+      background: transparent !important;
+      border: 1px solid #ced4da;
+      padding: 0.3rem;
+      max-height: 45px;
+      margin-bottom: 0px;
+      line-height: 45px;
+      resize: none;
+    }
+    .comment-actions {
+      float: right;
+    }
+  }
+}

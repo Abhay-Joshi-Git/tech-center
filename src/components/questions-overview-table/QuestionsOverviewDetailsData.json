@@ -1,0 +1,15 @@
+{
+    "index" : [
+        {
+            "id" : 0,
+            "name": "SXXP",
+            "values" : {
+                "today" : 32000,
+                "lastDay" : 32500,
+                "lastWeek": 34000,
+                "lastMonth": 35400,
+                "lastYear" : 36000
+            }
+        }
+    ]
+}
