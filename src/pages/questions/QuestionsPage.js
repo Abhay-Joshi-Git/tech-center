@@ -17,6 +17,12 @@ class QuestionsPage extends Component {
     // fetchQuestionsSummaryDataAPI().then(res => res.data);
   }
 
+  askNewQuestion = () => {
+    this.props.history.push({
+      pathname: `/threads/new`
+    });
+  };
+
   // componentWillReceiveProps(nextProps) {
   //   // if (
   //   //   nextProps.questionsData.data &&
@@ -41,7 +47,11 @@ class QuestionsPage extends Component {
       <div className="container-fluid mx-0 p-0 question-page-container">
         <div className="row mx-0 p-4">
           <div className="d-flex w-100 justify-content-end">
-            <button type="button" class="btn btn-primary new-question-button">
+            <button
+              type="button"
+              class="btn btn-primary new-question-button"
+              onClick={this.askNewQuestion}
+            >
               Ask a Question
             </button>
           </div>
