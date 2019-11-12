@@ -7,79 +7,80 @@ import axios from 'axios';
 import Post from '../../components/user-post/Post';
 import './QuestionThread.scss';
 
+import PreLoader from '../../components/pre-loader/PreLoader';
+
 export default class QuestionThread extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: false,
       postRefs: [],
-      thread: {
-        id: 1218928192,
-        posts: [
-          {
-            id: 3131313,
-            user: {
-              id: 12121131,
-              name: 'user X',
-              email: 'awdhoot.lele@synerzip.com',
-              reputation: 144
-            },
-            accepted: false,
-            createdAt: new Date(),
-            description: `{"blocks":[{"key":"5ahok","text":"this is demo","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"30l8d","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"8ch67","text":"import React from 'react';","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"455hj","text":"export default class App extends React.component {","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"90q02","text":"  render() {","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"c6058","text":"    return <div> Test </div>","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"9kgvh","text":"  }","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"5ive4","text":"}","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"23vge","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"a5od7","text":"please let me know.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}`,
-            comments: [
-              {
-                id: 212122,
-                description:
-                  'Some comment askjals asa saskalskalsk alsalskals kalska alsk aslk la sklas',
-                user: {
-                  id: 218931313,
-                  email: 'asd@gmail.com',
-                  name: 'user X',
-                  reputation: 144
-                }
-              },
-              {
-                id: 2121128122,
-                description: 'Some comment 2',
-                user: {
-                  id: 218931313,
-                  email: 'asd@gmail.com',
-                  name: 'user X',
-                  reputation: 144
-                }
-              }
-            ],
-            votes: [
-              {
-                id: 1928192812,
-                type: 'up',
-                user: {
-                  id: 102112,
-                  email: 'asdsds@gmail.com',
-                  name: 'user X',
-                  reputation: 144
-                }
-              }
-            ],
-            type: 'question',
-            tags: ['Javascript', 'React', 'Redux']
-          }
-        ],
-        title: 'How to integrate Redux in React applications?',
-        updatedTitle: 'How to integrate Redux in React applications?',
-        acceptedAnswer: ''
-      },
+      thread: null,
+      // thread: {
+      //   id: 1218928192,
+      //   posts: [
+      //     {
+      //       id: 3131313,
+      //       user: {
+      //         id: 12121131,
+      //         name: 'user X',
+      //         email: 'awdhoot.lele@synerzip.com',
+      //         reputation: 144
+      //       },
+      //       accepted: false,
+      //       createdAt: new Date(),
+      //       description: `{"blocks":[{"key":"5ahok","text":"this is demo","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"30l8d","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"8ch67","text":"import React from 'react';","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"455hj","text":"export default class App extends React.component {","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"90q02","text":"  render() {","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"c6058","text":"    return <div> Test </div>","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"9kgvh","text":"  }","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"5ive4","text":"}","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"23vge","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"a5od7","text":"please let me know.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}`,
+      //       comments: [
+      //         {
+      //           id: 212122,
+      //           description:
+      //             'Some comment askjals asa saskalskalsk alsalskals kalska alsk aslk la sklas',
+      //           user: {
+      //             id: 218931313,
+      //             email: 'asd@gmail.com',
+      //             name: 'user X',
+      //             reputation: 144
+      //           }
+      //         },
+      //         {
+      //           id: 2121128122,
+      //           description: 'Some comment 2',
+      //           user: {
+      //             id: 218931313,
+      //             email: 'asd@gmail.com',
+      //             name: 'user X',
+      //             reputation: 144
+      //           }
+      //         }
+      //       ],
+      //       votes: [
+      //         {
+      //           id: 1928192812,
+      //           type: 'up',
+      //           user: {
+      //             id: 102112,
+      //             email: 'asdsds@gmail.com',
+      //             name: 'user X',
+      //             reputation: 144
+      //           }
+      //         }
+      //       ],
+      //       type: 'question',
+      //       tags: ['Javascript', 'React', 'Redux']
+      //     }
+      //   ],
+      //   title: 'How to integrate Redux in React applications?',
+      //   updatedTitle: 'How to integrate Redux in React applications?',
+      //   acceptedAnswer: ''
+      // },
       isEditable: false,
       isNewQuestion: false
     };
   }
 
-  createPostRefs = () => {
-    const { thread } = this.state;
-    const postRefs = thread.posts.map(post => React.createRef());
-    this.setState({
-      postRefs
-    });
+  createPostRefs = posts => {
+    const postRefs = posts && posts.map(post => React.createRef());
+    return postRefs;
   };
 
   createNewThread() {
@@ -92,14 +93,16 @@ export default class QuestionThread extends React.Component {
           comments: [],
           description: `{"blocks":[{"key":"5ahok","text":"this is demo","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"30l8d","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"8ch67","text":"import React from 'react';","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"455hj","text":"export default class App extends React.component {","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"90q02","text":"  render() {","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"c6058","text":"    return <div> Test </div>","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"9kgvh","text":"  }","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"5ive4","text":"}","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"23vge","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"a5od7","text":"please let me know.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}`,
           isEditable: true,
-          type: 'question'
+          question: true
         }
       ]
     };
+    const postRefs = this.createPostRefs(newThread.posts);
     this.setState({
       thread: newThread,
       isEditable: true,
-      isNewQuestion: true
+      isNewQuestion: true,
+      postRefs
     });
   }
 
@@ -109,19 +112,24 @@ export default class QuestionThread extends React.Component {
       const questionThreadId = match.params.questionId;
       if (questionThreadId === 'new') {
         this.createNewThread();
-        this.createPostRefs();
       } else {
-        // this.createPostRefs()
+        this.setState({
+          isLoading: true
+        });
         axios
           .get(`/threads/${questionThreadId}`)
           .then(questionThread => {
-            console.log('DATA -> ', questionThread.data);
+            const postRefs = this.createPostRefs(QuestionThread.posts);
             this.setState({
-              thread: questionThread.data
+              isLoading: false,
+              thread: questionThread.data,
+              postRefs
             });
           })
           .catch(error => {
-            console.log('ERROR -> ', error);
+            this.setState({
+              isLoading: false
+            });
           });
       }
     }
@@ -154,15 +162,57 @@ export default class QuestionThread extends React.Component {
       }
       return {};
     });
-    console.log('POSTS -> ', posts);
+    return posts;
   }
 
   askNewQuestion = () => {
     // POST thread API here
-    console.log('Updated thread', this.state.thread);
     const newThread = {
+      title: this.state.thread.updatedTitle,
       posts: this.getPostsData()
     };
+    this.setState({
+      isLoading: true
+    });
+    axios
+      .post('/threads', newThread)
+      .then(res => {
+        console.log('RESPONSE ', res);
+        this.setState({
+          isLoading: false
+        });
+        this.props.history.push({
+          pathname: `/`
+        });
+      })
+      .catch(error => {
+        console.log('ERROR -> ', error);
+        this.setState({
+          isLoading: false
+        });
+      });
+
+    // axios
+    //   .put('/threads/1', {
+    //     id: 1,
+    //     title: 'Title',
+    //     posts: [
+    //       {
+    //         id: 1,
+    //         description: 'This is description',
+    //         // description: `{"blocks":[{"key":"5ahok","text":"this is demo","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"30l8d","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"8ch67","text":"import React from 'react';","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"455hj","text":"export default class App extends React.component {","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"90q02","text":"  render() {","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"c6058","text":"    return <div> Test </div>","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"9kgvh","text":"  }","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"5ive4","text":"}","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"23vge","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"a5od7","text":"please let me know.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}`,
+    //         comments: [],
+    //         votes: [],
+    //         question: true
+    //       }
+    //     ]
+    //   })
+    //   .then(res => {
+    //     console.log('RESPONSE ', res);
+    //   })
+    //   .catch(error => {
+    //     console.log('ERRO -> ', error);
+    //   });
   };
 
   renderIput() {
@@ -241,11 +291,12 @@ export default class QuestionThread extends React.Component {
   };
 
   render() {
-    const { thread, isEditable, postRefs } = this.state;
-    const questionPost = thread.posts.filter(post => post.type === 'question')[0];
-    const answerPosts = thread.posts.filter(post => post.type === 'answer');
+    const { thread, isLoading, isEditable, postRefs } = this.state;
+    const questionPost = thread && thread.posts.filter(post => post.question)[0];
+    const answerPosts = thread && thread.posts.filter(post => !post.question);
+    console.log('LOADING', isLoading);
 
-    return (
+    return !isLoading && thread ? (
       <div className="thread container mt-3">
         {isEditable && this.renderIput()}
         {!isEditable && (
@@ -275,6 +326,8 @@ export default class QuestionThread extends React.Component {
         {this.renderQuestionPost(questionPost, postRefs[0])}
         {this.renderAnswerPosts(answerPosts)}
       </div>
+    ) : (
+      <PreLoader></PreLoader>
     );
   }
 }

@@ -39,7 +39,7 @@ class QuestionsPage extends Component {
   onQuestionRowClicked = selectedQueObj => {
     localStorage.setItem('selectedQueId', selectedQueObj.id);
     this.props.history.push({
-      pathname: `/threads/${selectedQueObj.id}`
+      pathname: `/threads/${1}`
     });
   };
   render() {
