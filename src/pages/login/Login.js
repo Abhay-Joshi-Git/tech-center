@@ -5,6 +5,7 @@ import { login as initiateLogin } from './_store/actions';
 import { connect } from 'react-redux';
 import qs from 'query-string';
 import FloatingLabelInputText from '../../components/floating-label-input-text/FloatingLabelInputText';
+import { push } from 'react-router-redux';
 
 class Login extends Component {
 	constructor(props) {
@@ -26,11 +27,12 @@ class Login extends Component {
 		});
 	};
 	login = e => {
-		this.props.onSubmit(this.state.username, this.state.password)
+		this.props.navigate('/preferences');
 	};
 
 	render() {
 		const { username, password } = this.state;
+		const disableLoginBtn = !(username && password);
 		return (
 			<div className="container-fluid mx-0 p-0">
 				<header className="row mx-0 header-setup align-items-center">
@@ -63,7 +65,7 @@ class Login extends Component {
 				</div>
 				<footer className="row mx-0 pt-3 pb-3">
 					<div className="col p-0 text-center">
-						<button className="btn-orange-rounded" onClick={this.login}>
+						<button className={(disableLoginBtn ? "btn-disabled " : " ") + "btn-orange-rounded"} onClick={this.login} disabled={disableLoginBtn}>
 							{'Login'}
 						</button>
 					</div>
@@ -108,4 +110,10 @@ class LoginContainer extends React.Component {
 	}
 }
 
-export default connect(null, { initiateLogin })(LoginContainer);
+const mapDispatchToProps = (dispatch, ownProps) => {
+	return {
+		navigate: (path) => dispatch(push(path))
+	}
+}
+
+export default connect(null, mapDispatchToProps)(Login);
