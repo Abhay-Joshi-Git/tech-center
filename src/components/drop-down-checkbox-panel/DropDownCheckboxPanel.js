@@ -9,13 +9,16 @@ class DropDownCheckboxPanel extends Component {
     this.state = {
       isOpen: false,
       labels: this.props.labelsObj,
+      disabledView: this.props.disabledView ? this.props.disabledView : false,
       isAllChecked: false
     };
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('next props--', nextProps);
     this.setState({
-      labels: nextProps.labelsObj
+      labels: nextProps.labelsObj,
+      disabledView: nextProps.disabledView
     });
   }
 
@@ -60,7 +63,7 @@ class DropDownCheckboxPanel extends Component {
     this.checkStatusChanged(false, itemToBeRemoved);
   };
   render() {
-    const { isOpen, labels, isAllChecked } = this.state;
+    const { isOpen, disabledView, labels, isAllChecked } = this.state;
     const { keyVal, isIndicator } = this.props;
     const checkBoxAndLabelsList = labels.map(item => {
       return (
@@ -131,11 +134,13 @@ class DropDownCheckboxPanel extends Component {
     const placeHolderIndicatorClass = `${
       isIndicator ? "place-holder-label" : placeHolderClass
     }`;
-
+    const disabledViewClass = `${
+      disabledView ? " disabled-view" : ""
+    }`
     return (
       <div
         key={keyVal}
-        className={"dropdown mx-0 p-0" + indicatorColWidthClass}
+        className={"dropdown mx-0 p-0" + indicatorColWidthClass + disabledViewClass}
       >
         <div
           className={showBoxShadow}

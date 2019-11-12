@@ -61,7 +61,7 @@ export default class QuestionThread extends React.Component {
                 }
               }
             ],
-            type: 'answer',
+            type: 'question',
             tags: ['Javascript', 'React', 'Redux']
           }
         ],
@@ -184,7 +184,12 @@ export default class QuestionThread extends React.Component {
             <button
               type="button"
               className="btn btn-link"
-              onClick={() => this.setState({ isEditable: false })}
+              onClick={() =>
+                this.setState({
+                  isEditable: false,
+                  thread: { ...thread, updatedTitle: thread.title }
+                })
+              }
             >
               Cancel
             </button>

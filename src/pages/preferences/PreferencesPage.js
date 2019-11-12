@@ -148,7 +148,7 @@ class PreferencesPage extends Component {
     switch (selectionChangedFor) {
       case "preferenceTopics":
         this.setState({
-          selectedIndexes: selectedLabels.filter(item => item.selected)
+          selectedTopicOfInterest: selectedLabels.filter(item => item.selected)
         });
         break;
       default:

@@ -1,5 +1,22 @@
 @import '../../common';
 
+.disabled-view {
+    pointer-events: none;
+    background-color: red;
+
+    .dropdown-header-panel {
+        border: none !important;
+    }
+    .place-holder-label-above {
+        display: none;
+    }
+    .triangle-down {
+        display: none;
+    }
+    .label-wrapper .close {
+        display: none;
+    }
+}
 .dropdown-menu {
     background-color: $colorBackground;
     border: 1px solid $colorGrayBorder;
