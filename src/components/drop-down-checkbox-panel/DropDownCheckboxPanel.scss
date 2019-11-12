@@ -16,6 +16,9 @@
     .label-wrapper .close {
         display: none;
     }
+    .dropdown-menu {
+        display: none !important;
+    }
 }
 .dropdown-menu {
     background-color: $colorBackground;

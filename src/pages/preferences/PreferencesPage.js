@@ -91,6 +91,7 @@ class PreferencesPage extends Component {
     //   isUpdating: true
     // });
     // this.props.updateUserProfileAction(userId, userProfileObj);
+    this.props.history.push("/");
   };
 
   inputTextModified = (inputVal, modifiedInputField) => {
