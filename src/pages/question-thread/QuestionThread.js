@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-// import axios from 'axios';
+import axios from 'axios';
 
 import Post from '../../components/user-post/Post';
 import './QuestionThread.scss';
@@ -111,8 +111,18 @@ export default class QuestionThread extends React.Component {
         this.createNewThread();
         this.createPostRefs();
       } else {
-        // API call to get thread details using threadId
         // this.createPostRefs()
+        axios
+          .get(`/threads/${questionThreadId}`)
+          .then(questionThread => {
+            console.log('DATA -> ', questionThread.data);
+            this.setState({
+              thread: questionThread.data
+            });
+          })
+          .catch(error => {
+            console.log('ERROR -> ', error);
+          });
       }
     }
   }
