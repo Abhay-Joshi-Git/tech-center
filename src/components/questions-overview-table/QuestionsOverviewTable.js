@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import "./QuestionsOverviewTable.scss";
-import QuestionOverviewRow from "../question-overview-row/QuestionOverviewRow";
-import PreLoader from "../pre-loader/PreLoader";
+import React, { Component } from 'react';
+import './QuestionsOverviewTable.scss';
+import QuestionOverviewRow from '../question-overview-row/QuestionOverviewRow';
+import PreLoader from '../pre-loader/PreLoader';
 
 class QuestionsOverviewTable extends Component {
   constructor(props) {
@@ -39,11 +39,11 @@ class QuestionsOverviewTable extends Component {
   render() {
     console.log('questionsDetialsList --', this.state.questionsDetialsList);
     const questionsDetailsItems = this.state.questionsDetialsList.map(questionItem => {
-      console.log('quetsions item - ', questionItem.id)
+      console.log('quetsions item - ', questionItem.id);
       // return <span>123</span>
       return (
         <QuestionOverviewRow
-          key={"question-row-item-" + questionItem.id}
+          key={'question-row-item-' + questionItem.id}
           questionDetails={questionItem}
           onQuestionRowClicked={() => this.onQuestionRowClicked(questionItem)}
         />
@@ -63,9 +63,9 @@ class QuestionsOverviewTable extends Component {
         </div>
       </div>
     ) : (
-      <span className="questions-overview-table-wrapper">
+      <div className="questions-overview-table-wrapper mt-2">
         <PreLoader />
-      </span>
+      </div>
     );
   }
 }

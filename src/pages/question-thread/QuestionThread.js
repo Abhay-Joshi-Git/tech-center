@@ -167,9 +167,11 @@ export default class QuestionThread extends React.Component {
 
   askNewQuestion = () => {
     // POST thread API here
+    const posts = this.getPostsData();
     const newThread = {
       title: this.state.thread.updatedTitle,
-      posts: this.getPostsData()
+      posts: this.getPostsData(),
+      tags: posts[0].tags
     };
     this.setState({
       isLoading: true

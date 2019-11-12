@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './QuestionOverviewRow.scss';
 import LabelSelectable from '../label-selectable/LabelSelectable';
+import { formatDistance } from 'date-fns';
 
 class QuestionOverviewRow extends Component {
   // constructor(props) {
@@ -16,6 +17,9 @@ class QuestionOverviewRow extends Component {
   };
   render() {
     const { questionDetails } = this.props;
+
+    const formattedDate =
+      questionDetails && formatDistance(new Date(questionDetails.createdAt), new Date());
 
     const questionTags = questionDetails.tags.map((item, index) => {
       return (
@@ -41,7 +45,7 @@ class QuestionOverviewRow extends Component {
             <span className="col-sm-9">{questionTags}</span>
             <span className="col-sm-3 posted-by">
               <div className="row">Posted By: {questionDetails.postedBy}</div>
-              <div className="row">Last updated on: {questionDetails.date}</div>
+              <div className="row">{`Last updated: ${formattedDate} ago`} </div>
             </span>
           </span>
         </span>
