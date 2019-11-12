@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCheck } from '@fortawesome/free-solid-svg-icons';
-import { formatDistance, subDays } from 'date-fns';
+import { formatDistance } from 'date-fns';
 
 import RichTextEditor from '../text-editor/RichTextEditor';
 import { hashCode } from '../../utils';
@@ -28,26 +28,30 @@ export default class Post extends React.Component {
     setEditableRef && setEditableRef(this.editorRef.current);
 
     this.setState({
-      topicsOfInterest: this.getTags(PreferencesData.topicsOfInterest)
+      topicsOfInterest: this.getTags(JSON.parse(JSON.stringify(PreferencesData.topicsOfInterest)))
     });
   }
 
-  getTags = (topicsOfInterestRecieved) => {
-    const {post} = this.state;
-    const tagsWithSelectedTags = topicsOfInterestRecieved.map(tag => {
+  getTags = topicsOfInterestRecieved => {
+    const { post } = this.state;
+    const tagsWithSelectedTags = topicsOfInterestRecieved.map((tag, index) => {
       post.tags.forEach(preSelectedTag => {
-        if(tag.label === preSelectedTag) {
-          tag.selected = true
-        };
+        if (tag.label === preSelectedTag) {
+          tag.selected = true;
+        }
       });
+      tag.id = index;
       return tag;
     });
     return tagsWithSelectedTags;
-  }
+  };
   getPostData = () => {
     return {
       description: JSON.stringify(this.editorRef.current.getData()),
-      tags: ['JS', 'CSS', 'HTML']
+      tags: this.state.selectedTopicOfInterest.map(interest => interest.label),
+      commennts: [],
+      votes: [],
+      question: this.state.post.question
     };
   };
 
@@ -62,8 +66,7 @@ export default class Post extends React.Component {
 
   onSelectionChanged = (selectionChangedFor, selectedLabels) => {
     switch (selectionChangedFor) {
-      case "question_tags":
-
+      case 'question_tags':
         this.setState({
           selectedTopicOfInterest: selectedLabels.filter(item => item.selected)
         });
@@ -81,13 +84,13 @@ export default class Post extends React.Component {
 
     return (
       <DropDownCheckboxPanel
-          keyVal={"question_tags"}
-          disabledView={!isPostEditable}
-          labelsObj={topicsOfInterest}
-          placeHolderText={"Select Tags"}
-          onSelectionChanged={selectedLabels =>
-            this.onSelectionChanged("question_tags", selectedLabels)
-          }
+        keyVal={'question_tags'}
+        disabledView={!isPostEditable}
+        labelsObj={topicsOfInterest}
+        placeHolderText={'Select Tags'}
+        onSelectionChanged={selectedLabels =>
+          this.onSelectionChanged('question_tags', selectedLabels)
+        }
       />
     );
   }
@@ -103,22 +106,22 @@ export default class Post extends React.Component {
   onEditPostClicked = () => {
     this.setState({
       isEditable: true
-    })
-  }
+    });
+  };
 
   onDeletePostClicked = () => {
     // TODO: delete post need to implement
     this.setState({
       isEditable: false
     });
-  }
+  };
 
   onPostEditDone = () => {
     // TODO: post edit done API integration done
     this.setState({
       isEditable: false
     });
-  }
+  };
 
   onSubmit = () => {
     console.log(JSON.stringify(this.editorRef.current.getData()));
@@ -130,19 +133,19 @@ export default class Post extends React.Component {
     const { isEditable, post } = this.state;
 
     return (
-        <div className="row">
-            <div className="col-sm post-description text-left">
-                {/* <p>{post.description}</p> */}
-                <div>
-                    <RichTextEditor
-                        readOnly={!isEditable}
-                        defaultValue={post.description}
-                        key={hashCode(post.description)}
-                        ref={this.editorRef}
-                    />
-                </div>
-            </div>
+      <div className="row">
+        <div className="col-sm post-description text-left">
+          {/* <p>{post.description}</p> */}
+          <div>
+            <RichTextEditor
+              readOnly={!isEditable}
+              defaultValue={post.description}
+              key={hashCode(post.description)}
+              ref={this.editorRef}
+            />
+          </div>
         </div>
+      </div>
     );
   };
 
@@ -168,6 +171,8 @@ export default class Post extends React.Component {
 
   render() {
     const { post, isEditable } = this.state;
+    console.log('POST asasasaasas ', post);
+
     const postStatus = classNames({
       'post-status': true,
       accepted: post.accepted
@@ -176,32 +181,30 @@ export default class Post extends React.Component {
     return (
       <div className="post">
         <div className="d-flex">
-          {post.type === 'answer' && (
+          {!post.question && (
             <div className={postStatus} title="mark as accepted">
               <FontAwesomeIcon icon={faCheck} />
             </div>
           )}
           <div className="post-details flex-grow-1">
             {this.renderPostDescription()}
-            {post.type === 'question' && (
+            {post.question && (
               <div className="row">
-                <div className="col">
-                  {this.renderTags()}
-                </div>
+                <div className="col">{this.renderTags()}</div>
               </div>
             )}
             <div className="row">
               <div className="col-sm post-actions text-left">
-                { !isEditable ? <button type="button" className="btn btn-link"
-                  onClick={this.onEditPostClicked}>
-                  Edit
-                </button> :
-                <button type="button" className="btn btn-link"
-                  onClick={this.onPostEditDone}>
-                  Done
-                </button>}
-                <button type="button" className="btn btn-link"
-                  onClick={this.onDeletePostClicked}>
+                {!isEditable ? (
+                  <button type="button" className="btn btn-link" onClick={this.onEditPostClicked}>
+                    Edit
+                  </button>
+                ) : (
+                  <button type="button" className="btn btn-link" onClick={this.onPostEditDone}>
+                    Done
+                  </button>
+                )}
+                <button type="button" className="btn btn-link" onClick={this.onDeletePostClicked}>
                   Delete
                 </button>
               </div>
