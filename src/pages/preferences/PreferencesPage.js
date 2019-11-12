@@ -204,50 +204,6 @@ class PreferencesPage extends Component {
         </header>
         <div className="pb-3">
           <div className="row mx-0 mt-5">
-            <div className="col-md-3 offset-md-3">
-              <FloatingLabelInputText
-                inputLabel="First Name"
-                inputId="firstName"
-                inputVal={firstName}
-                showError={this.state.firstNameError}
-                errorNote="Please enter a valid First Name"
-                onInputChange={inputVal =>
-                  this.inputTextModified(inputVal, "firstName")
-                }
-                blur={inputVal => this.validateField(inputVal, "firstName")}
-              />
-            </div>
-            <div className="col-md-3">
-              <FloatingLabelInputText
-                inputLabel="Last Name"
-                inputId="lastName"
-                inputVal={lastName}
-                showError={this.state.lastNameError}
-                errorNote="Please enter a valid Last Name"
-                onInputChange={inputVal =>
-                  this.inputTextModified(inputVal, "lastName")
-                }
-                blur={inputVal => this.validateField(inputVal, "lastName")}
-              />
-            </div>
-          </div>
-          <div className="row mx-0">
-            <div className="col-md-6 offset-md-3">
-              <FloatingLabelInputText
-                inputLabel="Email"
-                inputId="email"
-                inputVal={email}
-                showError={this.state.emailError}
-                errorNote="Please enter a valid email address"
-                inputNote="This email will be used for notification"
-                onInputChange={inputVal =>
-                  this.inputTextModified(inputVal, "email")
-                }
-                blur={inputVal => this.validateField(inputVal, "email")}
-              />
-            </div>
-          </div>
-          <div className="row mx-0 mt-5">
             <div className="label-color col-md-6 offset-md-3 fs-18">
               Set Preferences
             </div>
@@ -262,7 +218,6 @@ class PreferencesPage extends Component {
               />
             </div>
           </div>
-         
         </div>
         <footer className="row mx-0 pt-3 pb-3">
           {/* <div className="row mx-0 p-3 select-strategy-footer"> */}

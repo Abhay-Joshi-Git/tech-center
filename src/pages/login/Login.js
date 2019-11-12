@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import qs from 'query-string';
 import FloatingLabelInputText from '../../components/floating-label-input-text/FloatingLabelInputText';
 import { push } from 'react-router-redux';
+import { setAuthentication } from '../../services/authentication/actions';
 
 class Login extends Component {
 	constructor(props) {
@@ -27,6 +28,7 @@ class Login extends Component {
 		});
 	};
 	login = e => {
+		this.props.authenticate();
 		this.props.navigate('/preferences');
 	};
 
@@ -112,7 +114,10 @@ class LoginContainer extends React.Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
-		navigate: (path) => dispatch(push(path))
+		navigate: (path) => dispatch(push(path)),
+		authenticate: () => {
+			dispatch(setAuthentication(true))
+		}
 	}
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import './App.scss';
 import QuestionsPage from './pages/questions/QuestionsPage';
@@ -17,7 +17,9 @@ function App() {
       <Switch>
         <Route exact path="/threads/:questionId" component={QuestionThread} />
         <Route exact path="/threads" component={QuestionsPage} />
-        <Route exact path="/" component={QuestionsPage} />
+        <Route exact path="/">
+          <Redirect to="/threads" />
+        </Route>
         <Route exact path="/preferences" component={PreferencesPage} />
         <Route exact path="/login" component={Login} />
         <Route component={NotFound} />
