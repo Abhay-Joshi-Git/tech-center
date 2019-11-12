@@ -8,6 +8,8 @@ import RichTextEditor from '../text-editor/RichTextEditor';
 import { hashCode } from '../../utils';
 import UserComment from '../user-comment/Comment';
 import './Post.scss';
+import DropDownCheckboxPanel from '../drop-down-checkbox-panel/DropDownCheckboxPanel';
+import PreferencesData from '../../pages/preferences/PreferencesData.json';
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -15,13 +17,32 @@ export default class Post extends React.Component {
     this.editorRef = React.createRef();
     this.state = {
       post: this.props.post,
-      isEditable: this.props.isEditable
+      isEditable: this.props.isEditable,
+      topicsOfInterest: [],
+      selectedTopicOfInterest: []
     };
   }
 
   componentDidMount() {
     const { setEditableRef } = this.props;
     setEditableRef && setEditableRef(this.editorRef.current);
+
+    this.setState({
+      topicsOfInterest: this.getTags(PreferencesData.topicsOfInterest)
+    });
+  }
+
+  getTags = (topicsOfInterestRecieved) => {
+    const {post} = this.state;
+    const tagsWithSelectedTags = topicsOfInterestRecieved.map(tag => {
+      post.tags.map((preSelectedTag) => {
+        if(tag.label === preSelectedTag) {
+          tag.selected = true
+        };
+      });
+      return tag;
+    });
+    return tagsWithSelectedTags;
   }
   getPostData = () => {
     return {
@@ -39,18 +60,36 @@ export default class Post extends React.Component {
     this.setState({ post });
   };
 
-  renderTags(post) {
-    // TODO - Edit / Add tags to a question-post functonality
-    if (post.tags.length) {
-      return post.tags.map((tag, i) => {
-        return (
-          <span key={i} className="tag badge badge-secondary">
-            {tag}
-          </span>
-        );
-      });
+  onSelectionChanged = (selectionChangedFor, selectedLabels) => {
+    switch (selectionChangedFor) {
+      case "question_tags":
+
+        this.setState({
+          selectedTopicOfInterest: selectedLabels.filter(item => item.selected)
+        });
+        break;
+      default:
+        break;
     }
-    return null;
+  };
+
+  renderTags() {
+    // TODO - Edit / Add tags to a question-post functonality
+    const { topicsOfInterest, isEditable } = this.state;
+
+    const isPostEditable = this.props.newPost || isEditable;
+
+    return (
+      <DropDownCheckboxPanel
+          keyVal={"question_tags"}
+          disabledView={!isPostEditable}
+          labelsObj={topicsOfInterest}
+          placeHolderText={"Select Tags"}
+          onSelectionChanged={selectedLabels =>
+            this.onSelectionChanged("question_tags", selectedLabels)
+          }
+      />
+    );
   }
   renderPostComments(post) {
     if (post.comments.length) {
@@ -59,6 +98,26 @@ export default class Post extends React.Component {
       });
     }
     return null;
+  }
+
+  onEditPostClicked = () => {
+    this.setState({
+      isEditable: true
+    })
+  }
+
+  onDeletePostClicked = () => {
+    // TODO: delete post need to implement
+    this.setState({
+      isEditable: false
+    });
+  }
+
+  onPostEditDone = () => {
+    // TODO: post edit done API integration done
+    this.setState({
+      isEditable: false
+    });
   }
 
   onSubmit = () => {
@@ -71,18 +130,19 @@ export default class Post extends React.Component {
     const { isEditable, post } = this.state;
 
     return (
-      <div className="row">
-        <div className="col-sm post-description text-left">
-          <div className="RichEditor-root">
-            <RichTextEditor
-              readOnly={!isEditable}
-              defaultValue={post.description}
-              key={hashCode(post.description)}
-              ref={this.editorRef}
-            />
-          </div>
+        <div className="row">
+            <div className="col-sm post-description text-left">
+                {/* <p>{post.description}</p> */}
+                <div>
+                    <RichTextEditor
+                        readOnly={!isEditable}
+                        defaultValue={post.description}
+                        key={hashCode(post.description)}
+                        ref={this.editorRef}
+                    />
+                </div>
+            </div>
         </div>
-      </div>
     );
   };
 
@@ -125,15 +185,23 @@ export default class Post extends React.Component {
             {this.renderPostDescription()}
             {post.type === 'question' && (
               <div className="row">
-                <div className="col-sm tags d-flex">{this.renderTags(post)}</div>
+                <div className="col">
+                  {this.renderTags()}
+                </div>
               </div>
             )}
             <div className="row">
               <div className="col-sm post-actions text-left">
-                <button type="button" className="btn btn-link">
+                { !isEditable ? <button type="button" className="btn btn-link"
+                  onClick={this.onEditPostClicked}>
                   Edit
-                </button>
-                <button type="button" className="btn btn-link">
+                </button> :
+                <button type="button" className="btn btn-link"
+                  onClick={this.onPostEditDone}>
+                  Done
+                </button>}
+                <button type="button" className="btn btn-link"
+                  onClick={this.onDeletePostClicked}>
                   Delete
                 </button>
               </div>

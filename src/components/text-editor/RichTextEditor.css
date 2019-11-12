@@ -13,6 +13,9 @@
 	margin-top: 10px;
 }
 
+.no-border {
+	border: none;
+}
 .RichEditor-editor .public-DraftEditorPlaceholder-root,
 .RichEditor-editor .public-DraftEditor-content {
 	margin: 0 -15px -15px;

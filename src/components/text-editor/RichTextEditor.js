@@ -71,7 +71,7 @@ class RichTextEditor extends React.Component {
     const { editorState } = this.state;
     const { readOnly } = this.props;
 
-    let className = 'RichEditor-editor';
+    let className = `${readOnly ? 'RichEditor-editor no-border' : 'RichEditor-editor'}`;
     var contentState = editorState.getCurrentContent();
     if (!contentState.hasText()) {
       if (

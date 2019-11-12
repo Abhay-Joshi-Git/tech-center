@@ -61,7 +61,7 @@ export default class QuestionThread extends React.Component {
                 }
               }
             ],
-            type: 'answer',
+            type: 'question',
             tags: ['Javascript', 'React', 'Redux']
           }
         ],
