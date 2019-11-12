@@ -32,27 +32,29 @@ class Login extends Component {
 	render() {
 		const { username, password } = this.state;
 		return (
-			<div className="container-fluid mx-0 p-0 preferences-container">
+			<div className="container-fluid mx-0 p-0">
 				<header className="row mx-0 header-setup align-items-center">
 					<div className="col text-center p-0">
-						<span className="logo-text"> Setup Profile </span>
+						<span className="logo-text"> Login </span>
 					</div>
 				</header>
 				<div className="pb-3">
 					<div className="row mx-0 mt-5">
-						<div className="col-md-3 offset-md-3">
+						<div className="col-md-4  offset-md-4">
 							<FloatingLabelInputText
-								inputLabel="First Name"
-								inputId="firstName"
+								inputLabel="User Name"
+								inputId="user name"
 								inputVal={username}
 								errorNote="Please enter a valid user name"
 								onInputChange={this.handleUserName}
 							/>
 						</div>
-						<div className="col-md-3">
+					</div>
+					<div className="row mx-0 mt-5">
+						<div className="col-md-4 offset-md-4">
 							<FloatingLabelInputText
-								inputLabel="Last Name"
-								inputId="lastName"
+								inputLabel="Password"
+								inputId="password"
 								inputVal={password}
 								onInputChange={this.handlePassword}
 							/>
@@ -60,14 +62,10 @@ class Login extends Component {
 					</div>
 				</div>
 				<footer className="row mx-0 pt-3 pb-3">
-					<div className="col-md-6 offset-md-3">
-						<div className="row mx-0 p-0">
-							<div className="col p-0 text-right">
-								<button onClick={this.login}>
-									{'Login'}
-								</button>
-							</div>
-						</div>
+					<div className="col p-0 text-center">
+						<button className="btn-orange-rounded" onClick={this.login}>
+							{'Login'}
+						</button>
 					</div>
 				</footer>
 			</div>
