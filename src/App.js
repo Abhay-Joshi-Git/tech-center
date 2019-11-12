@@ -8,7 +8,7 @@ import QuestionThread from './pages/question-thread/QuestionThread';
 import PreferencesPage from './pages/preferences/PreferencesPage';
 import Login from './pages/login/Login';
 
-import withAuthCheck  from './components/withAuthorizationCheck';
+import withAuthCheck from './components/withAuthorizationCheck';
 
 function App() {
   return (

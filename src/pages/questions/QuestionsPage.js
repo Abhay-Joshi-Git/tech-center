@@ -4,17 +4,36 @@ import './QuestionsPage.scss';
 import QuetionsOverviewTable from '../../components/questions-overview-table/QuestionsOverviewTable';
 // import { fetchQuestionsSummaryDataAPI } from './QuestionsPage_Service';
 import QuestionsData from './QuestionsData.json';
+import axios from 'axios';
 class QuestionsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      questionsData: QuestionsData
+      questionsData: {
+        data: []
+      }
     };
   }
 
   componentDidMount() {
-    // const userId = this.props.auth.data.id;
-    // fetchQuestionsSummaryDataAPI().then(res => res.data);
+    // Fetch Questions list
+    axios
+      .get('/threads')
+      .then(threads => {
+        this.setState({
+          questionsData: {
+            data: threads.data.content.map((thread, i) => ({
+              ...thread,
+              tags: [],
+              totalAnswers: i,
+              postedBy: QuestionsData.data[i] ? QuestionsData.data[i].postedBy : 'John Doe'
+            }))
+          }
+        });
+      })
+      .catch(error => {
+        console.log('ERROR', error);
+      });
   }
 
   askNewQuestion = () => {
@@ -23,23 +42,10 @@ class QuestionsPage extends Component {
     });
   };
 
-  // componentWillReceiveProps(nextProps) {
-  //   // if (
-  //   //   nextProps.questionsData.data &&
-  //   //   nextProps.questionsData.data.values
-  //   // ) {
-  //   //   this.setState({
-  //   //     questionsData: nextProps.questionsData.data
-  //   //   });
-  //   // }
-  //   if (localStorage.getItem("selectedQueId") === null) {
-  //     localStorage.setItem("selectedQueId", -1);
-  //   }
-  // }
   onQuestionRowClicked = selectedQueObj => {
     localStorage.setItem('selectedQueId', selectedQueObj.id);
     this.props.history.push({
-      pathname: `/threads/${1}`
+      pathname: `/threads/${selectedQueObj.id}`
     });
   };
   render() {
