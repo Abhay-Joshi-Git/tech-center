@@ -35,7 +35,7 @@ export default class Post extends React.Component {
   getTags = (topicsOfInterestRecieved) => {
     const {post} = this.state;
     const tagsWithSelectedTags = topicsOfInterestRecieved.map(tag => {
-      post.tags.map((preSelectedTag) => {
+      post.tags.forEach(preSelectedTag => {
         if(tag.label === preSelectedTag) {
           tag.selected = true
         };
@@ -167,7 +167,7 @@ export default class Post extends React.Component {
   };
 
   render() {
-    const { post } = this.state;
+    const { post, isEditable } = this.state;
     const postStatus = classNames({
       'post-status': true,
       accepted: post.accepted
