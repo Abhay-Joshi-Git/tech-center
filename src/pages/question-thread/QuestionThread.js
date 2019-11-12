@@ -10,22 +10,22 @@ import './QuestionThread.scss';
 export default class QuestionThread extends React.Component {
   constructor(props) {
     super(props);
-    this.editableRef = null;
     this.state = {
+      postRefs: [],
       thread: {
         id: 1218928192,
         posts: [
           {
-            is: 3131313,
+            id: 3131313,
             user: {
-              is: 12121131,
+              id: 12121131,
               name: 'user X',
               email: 'awdhoot.lele@synerzip.com',
               reputation: 144
             },
             accepted: false,
-            askedOn: new Date(),
-            description: 'How to integrate redux in the react app',
+            createdAt: new Date(),
+            description: `{"blocks":[{"key":"5ahok","text":"this is demo","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"30l8d","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"8ch67","text":"import React from 'react';","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"455hj","text":"export default class App extends React.component {","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"90q02","text":"  render() {","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"c6058","text":"    return <div> Test </div>","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"9kgvh","text":"  }","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"5ive4","text":"}","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"23vge","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"a5od7","text":"please let me know.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}`,
             comments: [
               {
                 id: 212122,
@@ -66,12 +66,41 @@ export default class QuestionThread extends React.Component {
           }
         ],
         title: 'How to integrate Redux in React applications?',
+        updatedTitle: 'How to integrate Redux in React applications?',
         acceptedAnswer: ''
       },
-      updatedTitle: 'How to integrate Redux in React applications?',
       isEditable: false,
       isNewQuestion: false
     };
+  }
+
+  createPostRefs = () => {
+    const { thread } = this.state;
+    const postRefs = thread.posts.map(post => React.createRef());
+    this.setState({
+      postRefs
+    });
+  };
+
+  createNewThread() {
+    const newThread = {
+      title: 'New Question',
+      updatedTitle: 'New Question',
+      posts: [
+        {
+          tags: [],
+          comments: [],
+          description: `{"blocks":[{"key":"5ahok","text":"this is demo","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"30l8d","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"8ch67","text":"import React from 'react';","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"455hj","text":"export default class App extends React.component {","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"90q02","text":"  render() {","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"c6058","text":"    return <div> Test </div>","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"9kgvh","text":"  }","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"5ive4","text":"}","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"23vge","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"a5od7","text":"please let me know.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}`,
+          isEditable: true,
+          type: 'question'
+        }
+      ]
+    };
+    this.setState({
+      thread: newThread,
+      isEditable: true,
+      isNewQuestion: true
+    });
   }
 
   componentDidMount() {
@@ -79,10 +108,11 @@ export default class QuestionThread extends React.Component {
     if (match) {
       const questionThreadId = match.params.questionId;
       if (questionThreadId === 'new') {
-        this.setState({
-          isEditable: true,
-          isNewQuestion: true
-        });
+        this.createNewThread();
+        this.createPostRefs();
+      } else {
+        // API call to get thread details using threadId
+        // this.createPostRefs()
       }
     }
   }
@@ -90,8 +120,10 @@ export default class QuestionThread extends React.Component {
   handleInputChange = event => {
     const value = event.target.value;
 
+    // keeping updated title outside thread obj, coz when we update the title,
+    //  we dont want to set the entire thread state with posts again
     this.setState({
-      updatedTitle: value
+      thread: { ...this.state.thread, updatedTitle: value }
     });
   };
 
@@ -103,70 +135,101 @@ export default class QuestionThread extends React.Component {
     this.refs.thread_title.style.display = 'none';
   };
 
+  getPostsData() {
+    const { thread, postRefs } = this.state;
+    const posts = thread.posts.map((post, index) => {
+      const postRef = postRefs[index];
+      if (postRef && postRef.current) {
+        return postRef.current.getPostData();
+      }
+      return {};
+    });
+    console.log('POSTS -> ', posts);
+  }
+
   askNewQuestion = () => {
-    // POST thread
-    console.log('Updated thread', this.state.thread, this.state.updatedTitle);
-    if (this.editableRef) {
-      console.log('Editable ref Data', this.editableRef.getData());
-    }
+    // POST thread API here
+    console.log('Updated thread', this.state.thread);
     const newThread = {
-      title: this.state.updatedTitle,
-      posts: [
-        {
-          description: JSON.stringify(this.editableRef.getData())
-        }
-      ]
+      posts: this.getPostsData()
     };
-    // TODO - API integration for new thread
-    // axios({
-    //   method: 'post',
-    //   url: 'https://evening-temple-27295.herokuapp.com/threads',
-    //   data: {}
-    // });
-  };
-  setEditableRef = ref => {
-    this.editableRef = ref;
   };
 
   renderIput() {
-    const { thread, updatedTitle, isEditable } = this.state;
+    const { thread } = this.state;
     return (
       <div className="thread-editable col-12">
-        <div className="form-group">
+        <form
+          className="form-group"
+          onSubmit={() =>
+            this.setState({
+              isEditable: false,
+              thread: { ...this.state.thread, title: thread.updatedTitle }
+            })
+          }
+        >
           <textarea
             rows={3}
             type="text"
-            value={updatedTitle}
+            value={thread.updatedTitle}
             className="form-control"
             id={thread.id}
             onChange={this.handleInputChange}
+            required
           />
-        </div>
-        <div className="btn-group thread-actions" role="group" aria-label="Basic example">
-          <button
-            type="button"
-            className="btn btn-link"
-            onClick={() => this.setState({ isEditable: false })}
-          >
-            Done
-          </button>
-          <button
-            type="button"
-            className="btn btn-link"
-            onClick={() => this.setState({ isEditable: false })}
-          >
-            Cancel
-          </button>
-        </div>
+          <div className="btn-group thread-actions" role="group" aria-label="Basic example">
+            <button type="submit" className="btn btn-link">
+              Done
+            </button>
+            <button
+              type="button"
+              className="btn btn-link"
+              onClick={() => this.setState({ isEditable: false })}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
       </div>
     );
   }
 
+  renderQuestionPost = (post, postRef) => {
+    if (post) {
+      return (
+        <div className="post-question">
+          <Post isEditable={post.isEditable} ref={postRef} post={post}></Post>
+          <button
+            type="button"
+            className="btn btn-primary new-question-button"
+            onClick={this.askNewQuestion}
+          >
+            Post new question
+          </button>
+        </div>
+      );
+    }
+  };
+  renderAnswerPosts = posts => {
+    const { postRefs, isNewQuestion } = this.state;
+    return (
+      !isNewQuestion && (
+        <div className="post-answers">
+          <div className="answer-count text-left">{`${posts.length} Answers`}</div>
+          <hr className="bold-hr"></hr>
+          {posts.map((post, index) => {
+            return <Post post={post} ref={postRefs[index + 1]}></Post>;
+          })}
+        </div>
+      )
+    );
+  };
+
   render() {
-    const { match } = this.props;
-    const questionThreadId = match.params.questionId;
-    const { thread, isEditable, updatedTitle, isNewQuestion } = this.state;
-    // TODO - Find a better way to send the editable ref from post -> questionThread (maybe redux)
+    const { thread, isEditable, postRefs } = this.state;
+    const questionPost = thread.posts.filter(post => post.type === 'question')[0];
+    const answerPosts = thread.posts.filter(post => post.type === 'answer');
+
     return (
       <div className="thread container mt-3">
         {isEditable && this.renderIput()}
@@ -194,29 +257,8 @@ export default class QuestionThread extends React.Component {
           </div>
         )}
         <hr></hr>
-        <div className="post-question">
-          <Post
-            setEditableRef={this.setEditableRef}
-            isEditable={isNewQuestion}
-            type="question"
-            post={thread.posts[0]}
-            newPost
-          ></Post>
-          <button
-            type="button"
-            className="btn btn-primary new-question-button"
-            onClick={this.askNewQuestion}
-          >
-            Post new question
-          </button>
-        </div>
-
-        <div className="post-answers">
-          <div className="answer-count text-left">{'3 Answers'}</div>
-          <hr className="bold-hr"></hr>
-          <Post post={thread.posts[0]}></Post>
-          <Post post={thread.posts[0]}></Post>
-        </div>
+        {this.renderQuestionPost(questionPost, postRefs[0])}
+        {this.renderAnswerPosts(answerPosts)}
       </div>
     );
   }
