@@ -22,7 +22,9 @@ class FloatingLabelInputText extends Component {
     this.props.onInputChange(e.target.value);
   };
   blur = e => {
-    this.props.blur(e.target.value);
+    if (this.props.blur) {
+      this.props.blur(e.target.value);
+    }
   };
   render() {
     const {
