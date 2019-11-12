@@ -1,7 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { configureInterceptor } from './services/axios-config';
+
+import { Router } from 'react-router-dom';
+import { syncHistoryWithStore } from 'react-router-redux';
+
+import { createBrowserHistory } from 'history';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-grid.css';
@@ -9,13 +14,35 @@ import 'bootstrap/dist/css/bootstrap-grid.css';
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import store from './redux/store';
+
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import rootReducer from './store/reducers';
+import { routerMiddleware } from 'react-router-redux';
+
+import sagas from './store/sagas';
+
+const browserHistory = createBrowserHistory();
+
+const sagaMiddleware = createSagaMiddleware()
+const store = createStore(
+	rootReducer,
+	applyMiddleware(
+		routerMiddleware(browserHistory),
+		sagaMiddleware
+	)
+)
+sagaMiddleware.run(sagas)
+
+configureInterceptor(store)
+
+const history = syncHistoryWithStore(browserHistory, store)
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <Router history={history}>
       <App></App>
-    </BrowserRouter>
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
