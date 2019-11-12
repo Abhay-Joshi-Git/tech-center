@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import "./FloatingLabelInputText.scss";
+import React, { Component } from 'react';
+import './FloatingLabelInputText.scss';
 
 class FloatingLabelInputText extends Component {
   constructor(props) {
@@ -27,29 +27,20 @@ class FloatingLabelInputText extends Component {
     }
   };
   render() {
-    const {
-      inputId,
-      inputLabel,
-      inputNote,
-      errorNote,
-      showError,
-      inputType,
-      minVal
-    } = this.props;
-    const errorText = showError ? "error-text" : "";
+    const { inputId, inputLabel, inputNote, errorNote, showError, inputType, minVal } = this.props;
+    const errorText = showError ? 'error-text' : '';
     const placeholderClassName = `${
-      this.state.inputVal !== ""
-        ? "form-control-placeholder placeholder-valid"
-        : "form-control-placeholder"
+      this.state.inputVal !== ''
+        ? 'form-control-placeholder placeholder-valid'
+        : 'form-control-placeholder'
     }  ${errorText} `;
-    let borderClassName = showError ? "error-border no-spinner" : "";
-    borderClassName = borderClassName + " form-control no-spinner";
+    let borderClassName = showError ? 'error-border no-spinner' : '';
+    borderClassName = borderClassName + ' form-control no-spinner';
 
-    return inputType === "number" ? (
+    return inputType === 'password' ? (
       <div className="form-group">
         <input
-          type="number"
-          min={minVal}
+          type="password"
           id={inputId}
           className={borderClassName}
           value={this.state.inputVal}
@@ -59,6 +50,10 @@ class FloatingLabelInputText extends Component {
         <label className={placeholderClassName} htmlFor={inputId}>
           {inputLabel}
         </label>
+        {!showError && inputNote && inputNote.length > 0 ? (
+          <span className="form-control-input-note">{inputNote}</span>
+        ) : null}
+        {showError ? <span className="form-control-input-note error-text">{errorNote}</span> : null}
       </div>
     ) : (
       <div className="form-group">
@@ -76,11 +71,7 @@ class FloatingLabelInputText extends Component {
         {!showError && inputNote && inputNote.length > 0 ? (
           <span className="form-control-input-note">{inputNote}</span>
         ) : null}
-        {showError ? (
-          <span className="form-control-input-note error-text">
-            {errorNote}
-          </span>
-        ) : null}
+        {showError ? <span className="form-control-input-note error-text">{errorNote}</span> : null}
       </div>
     );
   }
