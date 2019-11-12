@@ -50,9 +50,9 @@ const AuthCheckWithState = connect(mapStateToProps, { setAuthentication })(AuthC
 
 const withAuthCheck = (WrappedComponent) => () => {
 	return (
-		<AuthCheckWithState>
+		// <AuthCheckWithState>
 			<WrappedComponent />
-		</AuthCheckWithState>
+		// </AuthCheckWithState>
 	)
 };
 

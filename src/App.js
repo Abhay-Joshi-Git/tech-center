@@ -15,10 +15,10 @@ function App() {
     <div className="h-100">
       {/* // HEADER WILL GO HERE */}
       <Switch>
-        <Route exact path="/threads/:questionId" component={withAuthCheck(QuestionThread)} />
-        <Route exact path="/threads" component={withAuthCheck(QuestionsPage)} />
-        <Route exact path="/" component={withAuthCheck(QuestionsPage)} />
-        <Route exact path="/preferences" component={withAuthCheck(PreferencesPage)} />
+        <Route exact path="/threads/:questionId" component={QuestionThread} />
+        <Route exact path="/threads" component={QuestionsPage} />
+        <Route exact path="/" component={QuestionsPage} />
+        <Route exact path="/preferences" component={PreferencesPage} />
         <Route exact path="/login" component={Login} />
         <Route component={NotFound} />
       </Switch>
@@ -27,3 +27,11 @@ function App() {
 }
 
 export default App;
+
+
+/*
+        <Route exact path="/threads/:questionId" component={withAuthCheck(QuestionThread)} />
+        <Route exact path="/threads" component={withAuthCheck(QuestionsPage)} />
+        <Route exact path="/" component={withAuthCheck(QuestionsPage)} />
+        <Route exact path="/preferences" component={withAuthCheck(PreferencesPage)} />
+*/
